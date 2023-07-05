@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Categories from '../../components/Categories';
 
 function Search() {
   const [listProducts, setListProducts] = useState([]);
@@ -20,6 +21,7 @@ function Search() {
       >
         Carrinho
       </button>
+      <Categories />
     </>
   );
 }
