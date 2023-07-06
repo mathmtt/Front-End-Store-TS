@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getCategories } from '../services/api';
 
-const INITIAL_STATE = [{ id: '', name: '' }];
+type CategoryType = { id: string; name: string };
 
 function Categories() {
-  const [categories, setCategories] = useState(INITIAL_STATE);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
