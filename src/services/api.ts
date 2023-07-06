@@ -9,12 +9,18 @@ type GetProductsFromCategoryAndQueryProps = {
 };
 
 export async function getProductsFromCategoryAndQuery(
-  { categoryId, query }:GetProductsFromCategoryAndQueryProps,
+  { categoryId = '', query = '' }:GetProductsFromCategoryAndQueryProps,
 ) {
-  const API = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}&q=${query}`);
-  const data = await API.json();
-  console.log(data);
-  return data;
+  if (categoryId) {
+    const API = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}`);
+    const data = await API.json();
+    return data;
+  }
+  if (query) {
+    const API = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`);
+    const data = await API.json();
+    return data;
+  }
 }
 
 export async function getProductById() {

@@ -5,10 +5,17 @@ import Categories from '../../components/Categories';
 function Search() {
   const [listProducts, setListProducts] = useState([]);
   const navigate = useNavigate();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const { value } = event.target as HTMLInputElement;
+  };
+
   return (
     <>
       <form>
-        <input type="text" />
+        <input type="text" data-testid="query-input" />
+        <button> Pesquisar </button>
       </form>
       {listProducts.length === 0 ? (
         <h1 data-testid="home-initial-message">
