@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Categories from '../../components/Categories';
-import { getProductsFromCategoryAndQuery } from '../../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
 import { ListProductType } from '../../types';
+import ProductCard from '../../components/ProductCard';
+
+type CategoryType = { id: string; name: string };
 
 function Search() {
   const [listProducts, setListProducts] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,9 +23,17 @@ function Search() {
     if (inputValue) {
       const response = await getProductsFromCategoryAndQuery(inputValue, '');
       setListProducts(response.results);
-      console.log(response.results);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getCategories();
+      setCategories(response);
+    };
+    fetchData();
+    console.log('Use Effect');
+  }, []);
 
   return (
     <>
@@ -53,26 +65,23 @@ function Search() {
       >
         Carrinho
       </button>
-      <Categories />
+      <aside>
+        <h3>Categorias</h3>
+        {categories.length > 0 && (
+          categories.map((category) => (
+            <Categories key={ category.id } name={ category.name } id={ category.id } />
+          ))
+        )}
+      </aside>
       <section>
         { listProducts.length !== 0
           ? listProducts.map((product: ListProductType) => (
-            <div
-              className="productCard"
-              data-testid="product"
+            <ProductCard
               key={ product.id }
-            >
-              <h3>{product.title}</h3>
-              <img
-                src={ product.thumbnail }
-                alt="Product"
-              />
-              <p>
-                {' '}
-                {`R$ ${product.price}`}
-                {' '}
-              </p>
-            </div>
+              title={ product.title }
+              thumbnail={ product.thumbnail }
+              price={ product.price }
+            />
           ))
           : <h2> Nenhum produto foi encontrado </h2>}
       </section>
