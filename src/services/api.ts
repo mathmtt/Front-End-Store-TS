@@ -3,10 +3,6 @@ export async function getCategories() {
   const data = await response.json();
   return data;
 }
-// type GetProductsFromCategoryAndQueryProps = {
-//   categoryId: string;
-//   query: string;
-// };
 
 export async function getProductsFromCategoryAndQuery(query = '', categoryId = '') {
   if (categoryId) {
