@@ -3,14 +3,12 @@ export async function getCategories() {
   const data = await response.json();
   return data;
 }
-type GetProductsFromCategoryAndQueryProps = {
-  categoryId: string;
-  query: string;
-};
+// type GetProductsFromCategoryAndQueryProps = {
+//   categoryId: string;
+//   query: string;
+// };
 
-export async function getProductsFromCategoryAndQuery(
-  { categoryId = '', query = '' }:GetProductsFromCategoryAndQueryProps,
-) {
+export async function getProductsFromCategoryAndQuery(query = '', categoryId = '') {
   if (categoryId) {
     const API = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}`);
     const data = await API.json();
