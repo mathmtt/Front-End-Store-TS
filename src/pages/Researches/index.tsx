@@ -11,7 +11,14 @@ function Search() {
   const [listProducts, setListProducts] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [categories, setCategories] = useState<CategoryType[]>([]);
+
   const navigate = useNavigate();
+
+  const handleChangeCategory = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id } = event.target;
+    const response = await getProductsFromCategoryAndQuery('', id);
+    setListProducts(response.results);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -20,7 +27,7 @@ function Search() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (inputValue) {
+    if (inputValue !== '') {
       const response = await getProductsFromCategoryAndQuery(inputValue, '');
       setListProducts(response.results);
     }
@@ -69,7 +76,12 @@ function Search() {
         <h3>Categorias</h3>
         {categories.length > 0 && (
           categories.map((category) => (
-            <Categories key={ category.id } name={ category.name } id={ category.id } />
+            <Categories
+              key={ category.id }
+              name={ category.name }
+              id={ category.id }
+              handleChange={ handleChangeCategory }
+            />
           ))
         )}
       </aside>

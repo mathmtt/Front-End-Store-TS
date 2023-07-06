@@ -1,13 +1,10 @@
-type CategoryType = { id: string; name: string };
+type CategoriesProps = {
+  id: string;
+  name: string;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-function Categories({ id, name }: CategoryType) {
-  // const [selectedCategory, setSelectedCategory] = useState('');
-
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSelectedCategory(event.target.id);
-  //   console.log(event.target.id);
-  // };
-
+function Categories({ id, name, handleChange }: CategoriesProps) {
   return (
     <div>
       <label
@@ -16,6 +13,7 @@ function Categories({ id, name }: CategoryType) {
       >
         {name}
         <input
+          onChange={ handleChange }
           type="radio"
           name="category"
           id={ id }
