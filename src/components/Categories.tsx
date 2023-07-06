@@ -20,16 +20,22 @@ function Categories() {
       { categories.length !== 0
       && categories.map((category) => {
         return (
-          <>
+          <div
+            key={ category.id }
+          >
             <label
               data-testid="category"
               htmlFor={ category.name }
-              key={ category.id }
             >
               {category.name}
+              <input
+                type="radio"
+                name="category"
+                value={ category.name }
+                key={ category.id }
+              />
             </label>
-            <input type="radio" name="category" value={ category.name } />
-          </>
+          </div>
         );
       })}
     </div>
