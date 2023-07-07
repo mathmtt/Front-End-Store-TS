@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-type CartItemType = {
+export type CartItemType = {
   id: string;
   title: string;
   price: number;
@@ -109,6 +109,14 @@ function ShoppingCart() {
           </h2>
         )
   }
+      <button
+        disabled={ cart.length === 0 }
+        onClick={ () => navigate('/checkout') }
+        data-testid="checkout-products"
+      >
+        Finalizar Compra
+
+      </button>
     </div>
   );
 }
