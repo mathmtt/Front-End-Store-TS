@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProductById } from '../../services/api';
 import { ListProductType } from '../../types';
+import handleAddToCart from '../../services/AddToCart';
 
 export default function ProductDetails() {
   const [details, setDetails] = useState<ListProductType>();
@@ -49,6 +50,12 @@ export default function ProductDetails() {
               <p><strong>Detalhes do Produto...</strong></p>
             </aside>
           </div>
+          <button
+            onClick={ () => handleAddToCart(details) }
+            data-testid="product-detail-add-to-cart"
+          >
+            add to cart + plus
+          </button>
         </>
       )}
     </>
