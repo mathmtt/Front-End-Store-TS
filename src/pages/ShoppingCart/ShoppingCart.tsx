@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type CartItemType = {
   id: string;
@@ -10,6 +11,7 @@ type CartItemType = {
 
 function ShoppingCart() {
   const [cart, setCart] = useState<CartItemType[]>([]);
+  const navigate = useNavigate();
 
   const getData = () => {
     const data = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -44,6 +46,14 @@ function ShoppingCart() {
     }
   };
 
+  const removeItem = (id:string) => {
+    if (cart) {
+      const newCart = cart.filter((item) => item.id !== id);
+      setCart(newCart);
+      localStorage.setItem('cart', JSON.stringify(newCart));
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -55,7 +65,12 @@ function ShoppingCart() {
         ? (
           cart.map((item: CartItemType) => (
             <div key={ item.id }>
-              <button data-testid="remove-product">X</button>
+              <button
+                data-testid="remove-product"
+                onClick={ () => removeItem(item.id) }
+              >
+                X
+              </button>
               <img src={ item.thumbnail } alt={ item.title } />
               <h3 data-testid="shopping-cart-product-name">{item.title}</h3>
               <button
