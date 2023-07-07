@@ -60,6 +60,16 @@ function ShoppingCart() {
 
   return (
     <div>
+      <div>
+        <button
+          onClick={ () => navigate('/') }
+        >
+          {' '}
+          Voltar
+          {' '}
+
+        </button>
+      </div>
       {
       cart.length !== 0
         ? (
