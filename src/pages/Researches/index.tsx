@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Categories from '../../components/Categories';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
 import { ListProductType } from '../../types';
@@ -39,7 +39,6 @@ function Search() {
       setCategories(response);
     };
     fetchData();
-    console.log('Use Effect');
   }, []);
 
   return (
@@ -88,12 +87,18 @@ function Search() {
       <section>
         { listProducts.length !== 0
           ? listProducts.map((product: ListProductType) => (
-            <ProductCard
+            <Link
+              data-testid="product-detail-link"
+              to={ `product-details/${product.id}` }
               key={ product.id }
-              title={ product.title }
-              thumbnail={ product.thumbnail }
-              price={ product.price }
-            />
+            >
+              <ProductCard
+                id={ product.id }
+                title={ product.title }
+                thumbnail={ product.thumbnail }
+                price={ product.price }
+              />
+            </Link>
           ))
           : <h2> Nenhum produto foi encontrado </h2>}
       </section>

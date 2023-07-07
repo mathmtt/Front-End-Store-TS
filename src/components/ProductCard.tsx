@@ -1,11 +1,14 @@
+// import { Link } from 'react-router-dom';
+
 type ProductCardProps = {
   title: string;
   thumbnail: string;
   price: number;
+  id: string;
 };
 
 function ProductCard(props: ProductCardProps) {
-  const { title, thumbnail, price } = props;
+  const { title, thumbnail, price, id } = props;
   return (
     <div
       className="productCard"
