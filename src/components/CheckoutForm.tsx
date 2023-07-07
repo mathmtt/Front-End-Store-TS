@@ -14,7 +14,7 @@ function CheckoutForm(props: CheckoutFormProps) {
           data-testid="checkout-fullname"
           placeholder="Nome Completo"
           onChange={ onChange }
-          required
+          // required
         />
         <input
           type="text"
@@ -23,16 +23,16 @@ function CheckoutForm(props: CheckoutFormProps) {
           data-testid="checkout-cpf"
           onChange={ onChange }
           placeholder="cpf"
-          required
+          // required
         />
         <input
-          type="text"
+          type="email"
           name="email"
           id=""
           data-testid="checkout-email"
           onChange={ onChange }
           placeholder="Email"
-          required
+          // required
         />
         <input
           type="text"
@@ -40,7 +40,7 @@ function CheckoutForm(props: CheckoutFormProps) {
           id=""
           onChange={ onChange }
           data-testid="checkout-phone"
-          required
+          // required
           placeholder="Telefone"
         />
       </div>
@@ -51,7 +51,7 @@ function CheckoutForm(props: CheckoutFormProps) {
           id=""
           data-testid="checkout-cep"
           onChange={ onChange }
-          required
+          // required
           placeholder="CEP"
         />
         <input
@@ -60,7 +60,7 @@ function CheckoutForm(props: CheckoutFormProps) {
           id=""
           data-testid="checkout-address"
           onChange={ onChange }
-          required
+          // required
           placeholder="Endereço"
         />
       </div>
@@ -70,7 +70,7 @@ function CheckoutForm(props: CheckoutFormProps) {
           name="complement"
           id=""
           onChange={ onChange }
-          required
+          // required
           placeholder="Complemento"
         />
         <input
@@ -78,7 +78,7 @@ function CheckoutForm(props: CheckoutFormProps) {
           name="number"
           id=""
           onChange={ onChange }
-          required
+          // required
           placeholder="Número"
         />
         <input
@@ -86,7 +86,7 @@ function CheckoutForm(props: CheckoutFormProps) {
           name="city"
           id=""
           onChange={ onChange }
-          required
+          // required
           placeholder="Cidade"
         />
       </div> */}

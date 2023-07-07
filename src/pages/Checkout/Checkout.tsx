@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   phone: '',
   cep: '',
   address: '',
+  payment: '',
   // state?: '',
 };
 
