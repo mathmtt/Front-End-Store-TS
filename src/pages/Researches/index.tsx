@@ -12,6 +12,17 @@ function Search() {
   const [inputValue, setInputValue] = useState('');
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
+  function handleAddToCart(product: ListProductType) {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const productInCart = cart.find((item: ListProductType) => item.id === product.id);
+    if (productInCart) {
+      productInCart.quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
   const navigate = useNavigate();
 
   const handleChangeCategory = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,18 +98,25 @@ function Search() {
       <section>
         { listProducts.length !== 0
           ? listProducts.map((product: ListProductType) => (
-            <Link
-              data-testid="product-detail-link"
-              to={ `product-details/${product.id}` }
-              key={ product.id }
-            >
-              <ProductCard
-                id={ product.id }
-                title={ product.title }
-                thumbnail={ product.thumbnail }
-                price={ product.price }
-              />
-            </Link>
+            <div key={ product.id }>
+              <Link
+                data-testid="product-detail-link"
+                to={ `product-details/${product.id}` }
+              >
+                <ProductCard
+                  id={ product.id }
+                  title={ product.title }
+                  thumbnail={ product.thumbnail }
+                  price={ product.price }
+                />
+              </Link>
+              <button
+                data-testid="product-add-to-cart"
+                onClick={ () => handleAddToCart(product) }
+              >
+                add cart + plus
+              </button>
+            </div>
           ))
           : <h2> Nenhum produto foi encontrado </h2>}
       </section>
