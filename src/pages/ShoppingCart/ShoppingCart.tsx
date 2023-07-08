@@ -94,6 +94,7 @@ function ShoppingCart() {
               <button
                 data-testid="product-decrease-quantity"
                 onClick={ () => decreaseQuantity(item.id) }
+                disabled={ item.quantity === 1 }
               >
                 -
 
