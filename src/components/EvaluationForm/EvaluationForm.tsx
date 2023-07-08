@@ -8,7 +8,11 @@ const INITIAL_STATE = {
   rating: 0,
 };
 
-function EvaluationForm() {
+type EvaluationTypeProps = {
+  onClick: () => void,
+};
+
+function EvaluationForm({ onClick }: EvaluationTypeProps) {
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -43,7 +47,9 @@ function EvaluationForm() {
     <div>
       <h1>Avaliações</h1>
       <fieldset>
-        <form onSubmit={ handleSubmit }>
+        <form
+          onSubmit={ handleSubmit }
+        >
           <div>
             <input
               type="text"
@@ -60,7 +66,7 @@ function EvaluationForm() {
                 return (
                   <button
                     type="button"
-                    key={ star }
+                    key={ index }
                     id="rating-button"
                     className={ index <= (hover || rating) ? 'on' : 'off' }
                     data-testid={ `${index}-rating` }
@@ -88,6 +94,7 @@ function EvaluationForm() {
             />
             <button
               data-testid="submit-review-btn"
+              onClick={ onClick }
             >
               Avaliar
             </button>

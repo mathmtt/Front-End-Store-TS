@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getProductById } from '../../services/api';
 import { ListProductType } from '../../types';
 import handleAddToCart from '../../services/AddToCart';
-import AvaliationForm from '../../components/EvaluationForm/EvaluationForm';
+import EvaluationForm from '../../components/EvaluationForm/EvaluationForm';
 
 type EvaluationType = {
   email: string,
@@ -15,6 +15,7 @@ export default function ProductDetails() {
   const [details, setDetails] = useState<ListProductType>();
   const [availableQuantity, setAvailableQuantity] = useState<number>(0);
   const [evaluations, setEvaluations] = useState<EvaluationType[]>([]);
+  const [refresh, setRefresh] = useState(false);
 
   const { id } = useParams();
 
@@ -26,6 +27,10 @@ export default function ProductDetails() {
       setDetails(response);
       setAvailableQuantity(response.available_quantity);
     }
+  };
+
+  const refreshPage = () => {
+    setRefresh(!refresh);
   };
 
   const getData = () => {
@@ -42,9 +47,9 @@ export default function ProductDetails() {
   useEffect(() => {
     fetchData();
     getData();
-  }, []);
-  return (
+  }, [refresh]);
 
+  return (
     <>
       <div>
         <button onClick={ () => navigate('/') }>Voltar</button>
@@ -100,7 +105,9 @@ export default function ProductDetails() {
                 add to cart + plus
               </button>
             </div>
-            <AvaliationForm />
+            <EvaluationForm
+              onClick={ refreshPage }
+            />
           </div>
           <div>
             {
@@ -119,6 +126,7 @@ export default function ProductDetails() {
                       { evaluation.text }
                     </p>
                   </div>
+                  <hr />
                 </div>
               ))
             }
