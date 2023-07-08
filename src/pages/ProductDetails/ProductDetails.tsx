@@ -35,10 +35,6 @@ export default function ProductDetails() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
-
   const handleClick = () => {
     console.log(details);
   };

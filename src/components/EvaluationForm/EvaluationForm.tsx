@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './EvaluationForm.css';
 import { useParams } from 'react-router-dom';
 
