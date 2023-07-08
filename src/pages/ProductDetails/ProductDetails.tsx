@@ -3,9 +3,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getProductById } from '../../services/api';
 import { ListProductType } from '../../types';
 import handleAddToCart from '../../services/AddToCart';
+import AvaliationForm from '../../components/EvaluationForm/EvaluationForm';
+
+type EvaluationType = {
+  email: string,
+  text: string,
+  rating: number
+};
 
 export default function ProductDetails() {
   const [details, setDetails] = useState<ListProductType>();
+  const [availableQuantity, setAvailableQuantity] = useState<number>(0);
+  const [evaluations, setEvaluations] = useState<EvaluationType[]>([]);
 
   const { id } = useParams();
 
@@ -15,10 +24,28 @@ export default function ProductDetails() {
     if (id) {
       const response = await getProductById(id);
       setDetails(response);
+      setAvailableQuantity(response.available_quantity);
     }
   };
+
+  const getData = () => {
+    if (id) {
+      const data = JSON.parse(localStorage.getItem(id) || '[]');
+      setEvaluations(data);
+    }
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
+  const handleClick = () => {
+    console.log(details);
+  };
+
   useEffect(() => {
     fetchData();
+    getData();
   }, []);
   return (
 
@@ -50,12 +77,56 @@ export default function ProductDetails() {
               <p><strong>Detalhes do Produto...</strong></p>
             </aside>
           </div>
-          <button
-            onClick={ () => handleAddToCart(details) }
-            data-testid="product-detail-add-to-cart"
-          >
-            add to cart + plus
-          </button>
+          <div>
+            <div>
+              <small>
+                Quantidade disponível:
+                {' '}
+                { availableQuantity }
+              </small>
+              <h4>Quantidade</h4>
+              <button>-</button>
+              {
+                details.quantity ? <p>{ details.quantity }</p> : <p>1</p>
+              }
+              <button
+                onClick={ handleClick }
+              >
+                +
+
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={ () => handleAddToCart(details) }
+                data-testid="product-detail-add-to-cart"
+              >
+                add to cart + plus
+              </button>
+            </div>
+            <AvaliationForm />
+          </div>
+          <div>
+            {
+              evaluations.map((evaluation, index) => (
+                <div key={ index }>
+                  <div>
+                    <p data-testid="review-card-email">
+                      { evaluation.email }
+                    </p>
+                    <p data-testid="review-card-rating">
+                      { evaluation.rating }
+                    </p>
+                  </div>
+                  <div>
+                    <p data-testid="review-card-evaluation">
+                      { evaluation.text }
+                    </p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </>
       )}
     </>
