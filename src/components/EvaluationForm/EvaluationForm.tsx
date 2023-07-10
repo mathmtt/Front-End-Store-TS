@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './EvaluationForm.css';
 import { useParams } from 'react-router-dom';
+import ProductReviews from '../ProductReviews/ProductReviews';
 
 const INITIAL_STATE = {
   email: '',
@@ -12,11 +13,18 @@ type EvaluationTypeProps = {
   onClick: () => void,
 };
 
+type EvaluationType = {
+  email: string,
+  text: string,
+  rating: number
+};
+
 function EvaluationForm({ onClick }: EvaluationTypeProps) {
   const [formData, setFormData] = useState(INITIAL_STATE);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [errorMsg, setErrorMsg] = useState(false);
+  const [reviews, setReviews] = useState<EvaluationType[]>([]);
 
   const { id } = useParams();
 
@@ -25,6 +33,13 @@ function EvaluationForm({ onClick }: EvaluationTypeProps) {
   ) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const getData = () => {
+    if (id) {
+      const data = JSON.parse(localStorage.getItem(id) || '[]');
+      setReviews(data);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,12 +51,17 @@ function EvaluationForm({ onClick }: EvaluationTypeProps) {
       const data = JSON.parse(localStorage.getItem(id) || '[]');
       const newData = [...data, formData];
       localStorage.setItem(id, JSON.stringify(newData));
+      setReviews(newData);
       setFormData(INITIAL_STATE);
       setRating(0);
       setHover(0);
       setErrorMsg(false);
     }
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div>
@@ -104,6 +124,19 @@ function EvaluationForm({ onClick }: EvaluationTypeProps) {
         errorMsg && <p data-testid="error-msg">Campos inválidos</p>
       }
       </fieldset>
+      <div>
+        {
+          reviews.map((review, index) => (
+            <ProductReviews
+              key={ index }
+              email={ review.email }
+              rating={ review.rating }
+              text={ review.text }
+            />
+          ))
+}
+      </div>
+
     </div>
   );
 }

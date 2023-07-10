@@ -5,16 +5,9 @@ import { ListProductType } from '../../types';
 import handleAddToCart from '../../services/AddToCart';
 import EvaluationForm from '../../components/EvaluationForm/EvaluationForm';
 
-type EvaluationType = {
-  email: string,
-  text: string,
-  rating: number
-};
-
 export default function ProductDetails() {
   const [details, setDetails] = useState<ListProductType>();
   const [availableQuantity, setAvailableQuantity] = useState<number>(0);
-  const [evaluations, setEvaluations] = useState<EvaluationType[]>([]);
   const [refresh, setRefresh] = useState(false);
 
   const { id } = useParams();
@@ -33,12 +26,12 @@ export default function ProductDetails() {
     setRefresh(!refresh);
   };
 
-  const getData = () => {
-    if (id) {
-      const data = JSON.parse(localStorage.getItem(id) || '[]');
-      setEvaluations(data);
-    }
-  };
+  // const getData = () => {
+  //   if (id) {
+  //     const data = JSON.parse(localStorage.getItem(id) || '[]');
+  //     setEvaluations(data);
+  //   }
+  // };
 
   const handleClick = () => {
     console.log(details);
@@ -46,8 +39,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     fetchData();
-    getData();
-  }, [refresh]);
+  }, []);
 
   return (
     <>
@@ -109,7 +101,7 @@ export default function ProductDetails() {
               onClick={ refreshPage }
             />
           </div>
-          <div>
+          {/* <div>
             {
               evaluations.map((evaluation, index) => (
                 <div key={ index }>
@@ -130,7 +122,7 @@ export default function ProductDetails() {
                 </div>
               ))
             }
-          </div>
+          </div> */}
         </>
       )}
     </>
